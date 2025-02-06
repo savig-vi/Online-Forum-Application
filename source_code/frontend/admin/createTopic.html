@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo Chủ Đề Mới</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 700px;
+      margin-top: 30px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="text-center">Danh Sách Chủ Đề</h2>
+
+  <!-- Danh sách các chủ đề đã có -->
+  <ul class="list-group mb-4" id="topicList">
+    <!-- Chủ đề sẽ được thêm vào đây -->
+  </ul>
+
+  <h2 class="text-center">Tạo Chủ Đề Mới</h2>
+
+  <form id="createTopicForm">
+    <!-- Nhập tên chủ đề -->
+    <div class="mb-3">
+      <label for="topicName" class="form-label">Tên Chủ Đề</label>
+      <input type="text" class="form-control" id="topicName" placeholder="Nhập tên chủ đề..." required>
+    </div>
+
+    <!-- Nhập mô tả chủ đề -->
+    <div class="mb-3">
+      <label for="topicDescription" class="form-label">Mô Tả Chủ Đề</label>
+      <textarea class="form-control" id="topicDescription" rows="3" placeholder="Mô tả chủ đề..." required></textarea>
+    </div>
+
+    <!-- Nút gửi yêu cầu -->
+    <button type="submit" class="btn btn-primary w-100">Tạo Chủ Đề</button>
+  </form>
+</div>
+
+<script>
+  // Danh sách chủ đề mẫu (Giả lập dữ liệu từ database)
+  let topics = [
+    { id: 1, name: "Công Nghệ", description: "Thảo luận về công nghệ mới nhất" },
+    { id: 2, name: "Lập Trình", description: "Học tập và chia sẻ kiến thức lập trình" },
+    { id: 3, name: "Khoa Học", description: "Những khám phá khoa học thú vị" }
+  ];
+
+  function loadTopics() {
+    let topicList = document.getElementById("topicList");
+    topicList.innerHTML = "";
+
+    topics.forEach(topic => {
+      let li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between align-items-center";
+      li.innerHTML = `<strong>${topic.name}</strong> <span class="text-muted">${topic.description}</span>`;
+      topicList.appendChild(li);
+    });
+  }
+
+  document.getElementById("createTopicForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    let topicName = document.getElementById("topicName").value.trim();
+    let topicDescription = document.getElementById("topicDescription").value.trim();
+
+    if (topicName === "" || topicDescription === "") {
+      alert("Vui lòng nhập đầy đủ thông tin.");
+      return;
+    }
+
+    // Giả lập thêm chủ đề mới
+    let newTopic = { id: topics.length + 1, name: topicName, description: topicDescription };
+    topics.push(newTopic);
+    loadTopics();
+
+    alert("Chủ đề đã được tạo thành công!");
+    document.getElementById("createTopicForm").reset();
+  });
+
+  // Load danh sách chủ đề khi trang mở
+  loadTopics();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

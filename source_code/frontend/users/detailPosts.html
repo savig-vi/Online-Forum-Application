@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chủ Đề: Lập trình Web - Forum Online</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f4f7fc;
+    }
+    .navbar {
+      background-color: #007bff;
+    }
+    .navbar .navbar-brand, .navbar .nav-link {
+      color: white;
+    }
+    .navbar .nav-link:hover {
+      color: #ddd;
+    }
+    .topic-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+    .post-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .post-title {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .post-content {
+      color: #555;
+      margin-top: 10px;
+    }
+    .comment-card {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .comment-author {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .container {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">Forum Online</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Đăng Nhập</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.html">Đăng Ký</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Trang Chủ</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Chủ Đề -->
+    <h2 class="text-center mb-4 topic-title">Chủ Đề: Lập trình Web</h2>
+
+    <!-- Nút đăng bài mới -->
+    <div class="text-end mb-4">
+      <a href="#" class="btn btn-success">Đăng Bài Mới</a>
+    </div>
+
+    <!-- Các bài viết -->
+    <div class="post-card">
+      <div class="post-title">Hỏi về cách sử dụng Flexbox trong CSS</div>
+      <div class="post-content">Mình mới học CSS, đang gặp khó khăn khi sử dụng Flexbox để căn chỉnh các phần tử. Ai có thể giúp mình được không?</div>
+    </div>
+
+    <!-- Bình luận -->
+    <div class="comment-card">
+      <div class="comment-author">Admin</div>
+      <div class="comment-content">Chào bạn, bạn có thể sử dụng `justify-content` và `align-items` để căn chỉnh các phần tử trong Flexbox. Thử tham khảo tài liệu này nhé!</div>
+    </div>
+
+    <div class="comment-card">
+      <div class="comment-author">User123</div>
+      <div class="comment-content">Mình cũng gặp vấn đề tương tự, có thể sử dụng `flex-direction` để thay đổi hướng của các phần tử nữa!</div>
+    </div>
+
+    <!-- Khung trả lời -->
+    <div class="mt-4">
+      <h5>Trả lời bài viết</h5>
+      <form id="comment-form">
+        <textarea class="form-control" id="comment" rows="3" placeholder="Viết bình luận của bạn..." required></textarea>
+        <button type="submit" class="btn btn-primary mt-3">Gửi Bình Luận</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Xử lý form trả lời
+    document.getElementById('comment-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Ngừng hành động mặc định của form
+      let comment = document.getElementById('comment').value;
+
+      if (comment) {
+        // Thêm bình luận vào danh sách (sử dụng JavaScript để mô phỏng)
+        let newComment = document.createElement('div');
+        newComment.classList.add('comment-card');
+        newComment.innerHTML = `
+          <div class="comment-author">User456</div>
+          <div class="comment-content">${comment}</div>
+        `;
+        document.querySelector('.container').appendChild(newComment);
+
+        // Xóa nội dung trong khung trả lời
+        document.getElementById('comment').value = '';
+      } else {
+        alert('Vui lòng nhập bình luận!');
+      }
+    });
+  </script>
+</body>
+</html>
