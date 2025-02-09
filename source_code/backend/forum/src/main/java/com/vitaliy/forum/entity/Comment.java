@@ -18,28 +18,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "Comments")
+@Table(name = "Comment")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CommentID")
-    private int commentID;
+    @Column(name = "CommentId")
+    private int commentId;
 
     @ManyToOne
-    @JoinColumn(name = "PostID", nullable = false)
-    private Post post; // Quan hệ với Post (Bài viết được bình luận)
+    @JoinColumn(name = "PostId", nullable = false)
+    private Post postId; // Quan hệ với Post (Bài viết được bình luận)
 
     @ManyToOne
-    @JoinColumn(name = "AuthorID", nullable = false)
-    private User author; // Quan hệ với User (Người bình luận)
+    @JoinColumn(name = "AuthorId", nullable = false)
+    private User authorId; // Quan hệ với User (Người bình luận)
 
     @Column(name = "Content", nullable = false)
     private String content; // Nội dung bình luận
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CommentDate", nullable = false)
+    @Column(name = "CommentDate")
     private Date commentDate; // Thời gian bình luận
 
-    @Column(name = "IsActive", nullable = false)
+    @Column(name = "IsActive")
     private boolean isActive; // Trạng thái bình luận (đang hoạt động hay bị khóa)
 }

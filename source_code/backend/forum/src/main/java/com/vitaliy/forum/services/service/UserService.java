@@ -1,6 +1,7 @@
 package com.vitaliy.forum.services.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.vitaliy.forum.entity.User;
 
@@ -14,4 +15,5 @@ public interface UserService {
     void deleteUser(int id);
     void activateUser(int id);
     void deactivateUser(int id);
+    boolean checkInfoLogin(String email, String passwordHash);
 }

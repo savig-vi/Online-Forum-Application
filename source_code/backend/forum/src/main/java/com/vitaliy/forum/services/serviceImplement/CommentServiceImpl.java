@@ -27,13 +27,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> getCommentsByPost(Post post) {
-        return commentRepository.findByPost(post);
+    public List<Comment> getCommentsByPostId(Post post) {
+        return commentRepository.findByPostId(post);
     }
 
     @Override
     public List<Comment> getCommentsByAuthor(User author) {
-        return commentRepository.findByAuthor(author);
+        return commentRepository.findByAuthorId(author);
     }
 
     @Override

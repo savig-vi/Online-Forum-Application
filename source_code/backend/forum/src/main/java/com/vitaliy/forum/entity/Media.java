@@ -4,8 +4,6 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,33 +20,28 @@ import lombok.Data;
 public class Media {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MediaID")
-    private int mediaID;
+    @Column(name = "MediaId")
+    private int mediaId;
 
     @ManyToOne
-    @JoinColumn(name = "PostID")
-    private Post post; // Bài viết chứa media (nếu có)
+    @JoinColumn(name = "PostId")
+    private Post postId; // Bài viết chứa media (nếu có)
 
     @ManyToOne
-    @JoinColumn(name = "CommentID")
-    private Comment comment; // Bình luận chứa media (nếu có)
+    @JoinColumn(name = "CommentId")
+    private Comment commentId; // Bình luận chứa media (nếu có)
 
     @Column(name = "FileURL", nullable = false)
     private String fileURL; // Đường dẫn đến file
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "FileType", nullable = false)
-    private FileType fileType; // Loại tệp (Hình ảnh hoặc Video)
+    @Column(name = "FileType")
+    private Boolean fileType; // Loại tệp (Hình ảnh hoặc Video)
 
     @ManyToOne
-    @JoinColumn(name = "UploadedBy", nullable = false)
-    private User uploadedBy; // Người tải lên
+    @JoinColumn(name = "UploadedById", nullable = false)
+    private User uploadedById; // Người tải lên
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "UploadDate", nullable = false)
+    @Column(name = "UploadDate")
     private Date uploadDate; // Thời gian tải lên
-
-    public enum FileType {
-        IMAGE, VIDEO;
-    }
 }

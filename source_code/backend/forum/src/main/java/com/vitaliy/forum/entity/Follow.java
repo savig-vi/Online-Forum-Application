@@ -16,22 +16,22 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Follows")
+@Table(name = "Follow")
 public class Follow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FollowID")
-    private int followID;
+    @Column(name = "FollowId")
+    private int followId;
 
     @ManyToOne
-    @JoinColumn(name = "FollowerID", nullable = false)
-    private User follower; // Người theo dõi
+    @JoinColumn(name = "FollowerId", nullable = false)
+    private User followerId; // Người theo dõi
 
     @ManyToOne
-    @JoinColumn(name = "FollowedID", nullable = false)
-    private User followed; // Người được theo dõi
+    @JoinColumn(name = "FollowedId", nullable = false)
+    private User followedId; // Người được theo dõi
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "FollowDate", nullable = false)
+    @Column(name = "FollowDate")
     private Date followDate; // Thời gian theo dõi
 }

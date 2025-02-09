@@ -28,18 +28,18 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public List<Media> getMediaByPost(Post post) {
-        return mediaRepository.findByPost(post);
+    public List<Media> getMediaByPost(Post postId) {
+        return mediaRepository.findByPostId(postId);
     }
 
     @Override
-    public List<Media> getMediaByComment(Comment comment) {
-        return mediaRepository.findByComment(comment);
+    public List<Media> getMediaByComment(Comment commentId) {
+        return mediaRepository.findByCommentId(commentId);
     }
 
     @Override
-    public List<Media> getMediaByUploader(User user) {
-        return mediaRepository.findByUploadedBy(user);
+    public List<Media> getMediaByUploader(User userId) {
+        return mediaRepository.findByUploadedById(userId);
     }
 
     @Override

@@ -10,8 +10,8 @@ import com.vitaliy.forum.entity.User;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Integer> {
-    List<Message> findBySender(User sender);
-    List<Message> findByReceiver(User receiver);
+    List<Message> findBySenderId(User senderId);
+    List<Message> findByReceiverId(User receiverId);
     List<Message> findByIsRead(Boolean isRead);
-    List<Message> findByReceiverAndIsRead(User rereceiver, Boolean isRead);
+    List<Message> findByReceiverIdAndIsRead(User rereceiver, Boolean isRead);
 }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Chủ - Forum Online</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/home.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">Forum Online</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="login.html" id="login-link">Đăng Nhập</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.html" id="register-link">Đăng Ký</a>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link" id="user-info" style="display:none;"></span> <!-- Thông tin người dùng -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="logout-button" style="display:none;">Đăng Xuất</a> <!-- Đăng xuất -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2 class="text-center mb-4">Chào mừng đến với Forum Online!</h2>
+    <div class="row" id="category-list"></div>
+    <div class="text-center mt-4">
+      <a href="#" class="btn btn-primary">Xem thêm các chủ đề</a>
+    </div>
+    <div id="posts-by-category"></div>
+  </div>
+  <div id="post-detail"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./js/home.js"></script>
+</body>
+</html>

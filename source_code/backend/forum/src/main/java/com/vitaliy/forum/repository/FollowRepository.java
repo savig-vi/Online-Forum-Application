@@ -10,7 +10,7 @@ import com.vitaliy.forum.entity.User;
 
 @Repository
 public interface FollowRepository extends JpaRepository<Follow, Integer> {
-    List<Follow> findByFollowed(User followed);
-    List<Follow> findByFollower(User follower);
-    Follow findByFollowerAndFollowed(User follower, User followed);
+    List<Follow> findByFollowedId(User followedId);
+    List<Follow> findByFollowerId(User followerId);
+    Follow findByFollowerIdAndFollowedId(User followerId, User followedId);
 }

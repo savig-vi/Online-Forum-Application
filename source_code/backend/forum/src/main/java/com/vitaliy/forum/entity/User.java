@@ -2,12 +2,9 @@ package com.vitaliy.forum.entity;
 
 import java.util.Date;
 
-import javax.management.relation.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,49 +17,50 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "Users")
+@Table(name = "User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
-    private int userID;
+    @Column(name = "UserId")
+    private int userId;
 
-    @Column(name = "Username", nullable = false, unique = true, length = 50)
-    private String username;
+    @Column(name = "UserName", nullable = false, unique = true, length = 50)
+    private String userName;
 
     @Column(name = "PasswordHash", length = 255)
     private String passwordHash;
 
-    @Column(name = "Email", unique = true, length = 100)
+    @Column(name = "Email", unique = true, length = 100, nullable = false)
     private String email;
 
-    @Column(name = "FullName", length = 50)
+    @Column(name = "FullName", length = 50, nullable = false)
     private String fullName;
 
-    @Column(name = "PhoneNumber", length = 15)
+    @Column(name = "PhoneNumber", length = 10, nullable = false)
     private String phoneNumber;
 
-    @Column(name = "Address")
+    @Column(name = "Address", nullable = false)
     private String address;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "RegistrationDate", nullable = false)
+    @Column(name = "RegistrationDate")
     private Date registrationDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "LastLogin")
-    private Date lastLogin;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "Role", nullable = false)
-    private Role role;
+    @Column(name = "UserRole")
+    private boolean userRole;
 
-    @Column(name = "IsActive", nullable = false)
+    @Column(name = "IsActive")
     private boolean isActive;
 
-    @Column(name = "GoogleID", length = 255)
-    private String googleID;
+    @Column(name = "FacebookId")
+    private String facebookId;
 
-    @Column(name = "FacebookID", length = 255)
-    private String facebookID;
+    @Override
+    public String toString() {
+        return "User [userId=" + userId + ", userName=" + userName + ", passwordHash=" + passwordHash + ", email="
+                + email + ", fullName=" + fullName + ", phoneNumber=" + phoneNumber + ", address=" + address
+                + ", registrationDate=" + registrationDate + ", userRole=" + userRole + ", isActive=" + isActive
+                + ", facebookId=" + facebookId + "]";
+    }
 }

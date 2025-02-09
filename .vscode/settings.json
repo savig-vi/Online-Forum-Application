@@ -1,0 +1,12 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "liveServer.settings.port": 5501,
+    "liveServer.settings.root": "/",
+    "liveServer.settings.CustomBrowser": "chrome",
+    "liveServer.settings.https": {
+        "enable": true,
+        "cert": "D:/Online-Forum-Application/source_code/frontend/https/localhost.pem",
+        "key": "D:/Online-Forum-Application/source_code/frontend/https/localhost.key",
+        "passphrase": "123456"
+    }
+}

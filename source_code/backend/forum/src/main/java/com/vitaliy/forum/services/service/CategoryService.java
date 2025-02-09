@@ -8,7 +8,7 @@ public interface CategoryService {
     Category saveCategory(Category category);
     Category getCategoryById(int id);
     Category getCategoryByName(String categoryName);
-    List<Category> getAllCategories();
+    List<Category> getAllCategory();
     void updateCategory(Category category);
     void deleteCategory(int id);
 }

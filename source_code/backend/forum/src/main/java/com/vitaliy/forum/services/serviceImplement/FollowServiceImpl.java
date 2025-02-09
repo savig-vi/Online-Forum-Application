@@ -18,26 +18,26 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public void followUser(User follower, User followed) {
         Follow follow = new Follow();
-        follow.setFollower(follower);
-        follow.setFollowed(followed);
+        follow.setFollowerId(follower);
+        follow.setFollowedId(followed);
         followRepository.save(follow);
     }
 
     @Override
-    public void unfollowUser(User follower, User followed) {
-        Follow follow = followRepository.findByFollowerAndFollowed(follower, followed);
+    public void unfollowUser(User followerId, User followedId) {
+        Follow follow = followRepository.findByFollowerIdAndFollowedId(followerId, followedId);
         if (follow != null) {
             followRepository.delete(follow);
         }
     }
 
     @Override
-    public List<Follow> getFollowers(User followed) {
-        return followRepository.findByFollowed(followed);
+    public List<Follow> getFollowers(User followedId) {
+        return followRepository.findByFollowedId(followedId);
     }
 
     @Override
-    public List<Follow> getFollowing(User follower) {
-        return followRepository.findByFollower(follower);
+    public List<Follow> getFollowing(User followerId) {
+        return followRepository.findByFollowerId(followerId);
     }
 }

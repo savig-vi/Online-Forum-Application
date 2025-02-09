@@ -26,18 +26,18 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> getMessagesBySender(User sender) {
-        return messageRepository.findBySender(sender);
+    public List<Message> getMessagesBySender(User senderId) {
+        return messageRepository.findBySenderId(senderId);
     }
 
     @Override
-    public List<Message> getMessagesByReceiver(User receiver) {
-        return messageRepository.findByReceiver(receiver);
+    public List<Message> getMessagesByReceiver(User receiverId) {
+        return messageRepository.findByReceiverId(receiverId);
     }
 
     @Override
-    public List<Message> getUnreadMessages(User receiver) {
-        return messageRepository.findByReceiverAndIsRead(receiver, false);
+    public List<Message> getUnreadMessages(User receiverId) {
+        return messageRepository.findByReceiverIdAndIsRead(receiverId, false);
     }
 
     @Override

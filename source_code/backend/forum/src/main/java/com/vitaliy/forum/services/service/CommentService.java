@@ -9,7 +9,7 @@ import com.vitaliy.forum.entity.User;
 public interface CommentService {
     Comment saveComment(Comment comment);
     Comment getCommentById(int id);
-    List<Comment> getCommentsByPost(Post post);
+    List<Comment> getCommentsByPostId(Post post);
     List<Comment> getCommentsByAuthor(User author);
     void updateComment(Comment comment);
     void deleteComment(int id);

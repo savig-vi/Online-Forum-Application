@@ -16,28 +16,28 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "Messages")
+@Table(name = "Message")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MessageID")
-    private int messageID;
+    @Column(name = "MessageId")
+    private int messageId;
 
     @ManyToOne
     @JoinColumn(name = "SenderID", nullable = false)
-    private User sender; // Người gửi tin nhắn
+    private User senderId; // Người gửi tin nhắn
 
     @ManyToOne
-    @JoinColumn(name = "ReceiverID", nullable = false)
-    private User receiver; // Người nhận tin nhắn
+    @JoinColumn(name = "ReceiverId", nullable = false)
+    private User receiverId; // Người nhận tin nhắn
 
     @Column(name = "Content", nullable = false)
     private String content; // Nội dung tin nhắn
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "SentDate", nullable = false)
+    @Column(name = "SentDate")
     private Date sentDate; // Thời gian gửi tin nhắn
 
-    @Column(name = "IsRead", nullable = false)
+    @Column(name = "IsRead")
     private boolean isRead; // Đánh dấu tin nhắn đã đọc hay chưa
 }

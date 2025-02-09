@@ -11,6 +11,6 @@ import com.vitaliy.forum.entity.User;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
-    List<Comment> findByPost(Post post);
-    List<Comment> findByAuthor(User author);
+    List<Comment> findByPostId(Post post);
+    List<Comment> findByAuthorId(User authorId);
 }

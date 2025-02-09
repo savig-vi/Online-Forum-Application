@@ -11,7 +11,8 @@ import com.vitaliy.forum.entity.User;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    List<Post> findByCategory(Category category);
-    List<Post> findByAuthor(User author);
-    List<Post> findByVisibility(String visibility);
+    Post findByPostId(Post post);
+    List<Post> findByCategoryId(Category categoryId);
+    List<Post> findByAuthorId(User authorId);
+    List<Post> findByVisibility(Boolean visibility);
 }

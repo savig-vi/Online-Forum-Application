@@ -10,3 +10,27 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+  web:
+    resources:
+      add-mappings: true
+server:
+  port: 8443
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: 123456
+    key-store-type: PKCS12
+    key-alias: myssl
+  tomcat:
+    basedir: .
+    relaxed-query-chars: ['<', '>', '[', ']', '{', '}', '|', '^', '`', '"']
+  servlet:
+    session:
+      timeout: 1800
+      tracking-modes: cookie
+      cookie:
+        name: JSESSIONID
+        http-only: true
+        secure: true   
+        same-site: NONE
+ 
