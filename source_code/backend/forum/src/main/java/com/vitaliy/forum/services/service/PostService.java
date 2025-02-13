@@ -1,6 +1,7 @@
 package com.vitaliy.forum.services.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.vitaliy.forum.dto.post.CreatePostRequestDTO;
 import com.vitaliy.forum.dto.post.UpdatePostRequestDTO;
@@ -20,4 +21,5 @@ public interface PostService {
     Post togglePostVisibility(int postId, boolean visibility);
     Post togglePostStatus(int postId, boolean isActive);
     int updateIsActiveById(int postId, Boolean isActive);
+    public Map<String, Object> getPostCategoryStats();
 }

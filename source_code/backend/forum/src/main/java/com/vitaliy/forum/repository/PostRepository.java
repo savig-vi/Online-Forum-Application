@@ -39,4 +39,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Modifying
     @Query("UPDATE Post p SET p.isActive = :isActive WHERE p.postId = :postId")
     int updateIsActiveById(@Param("postId") int postId, @Param("isActive") boolean isActive);
+
+    @Query("SELECT c.categoryName, COUNT(p) FROM Post p JOIN p.category c GROUP BY c.categoryName")
+    List<Object[]> findPostCountByCategory();
 }

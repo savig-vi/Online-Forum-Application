@@ -2,8 +2,8 @@ $(document).ready(function () {
     loadCategories();
     // XỬ LÝ KHI CLICK CÁC NÚT TRÊN NAVBAR MENU
     $('.management-link').click(function(e) {
+        loadCategories();
         e.preventDefault();
-        
         // Xóa active class cũ
         $('.management-link').removeClass('active');
         $('.management-section').removeClass('active');

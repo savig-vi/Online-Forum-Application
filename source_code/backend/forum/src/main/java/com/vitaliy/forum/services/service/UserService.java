@@ -9,7 +9,7 @@ public interface UserService {
     List<User> getAllUsers();
     User getUserById(int userId);
     User createUser(User user);
-    User updateUser(int userId, String fullName, String phoneNumber, String address, String email);
+    User updateUser(int userId, String fullName, String phoneNumber, String address, String email, String passwordHash);
     void deleteUser(int userId);
     User toggleUserStatus(int userId, boolean isActive);
     boolean userExists(String userName, String email);

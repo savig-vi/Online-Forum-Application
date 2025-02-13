@@ -1,7 +1,10 @@
 package com.vitaliy.forum.services.serviceImplement;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -129,5 +132,22 @@ public class PostServiceImpl implements PostService {
 
         post.setActive(isActive);
         return postRepository.save(post); // Lưu trạng thái hoạt động đã thay đổi
+    }
+
+    @Override
+    public Map<String, Object> getPostCategoryStats() {
+        List<Object[]> results = postRepository.findPostCountByCategory();
+        Map<String, Object> data = new HashMap<>();
+        List<String> labels = new ArrayList<>();
+        List<Long> values = new ArrayList<>();
+
+        for (Object[] result : results) {
+            labels.add((String) result[0]);
+            values.add((Long) result[1]);
+        }
+
+        data.put("labels", labels);
+        data.put("values", values);
+        return data;
     }
 }

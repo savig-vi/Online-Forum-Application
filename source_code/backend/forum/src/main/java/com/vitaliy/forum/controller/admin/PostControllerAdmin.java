@@ -18,6 +18,7 @@ import com.vitaliy.forum.services.service.PostService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -54,6 +55,11 @@ public class PostControllerAdmin {
             return ResponseEntity.status(e.getStatus())
                     .body(new PostResponseDTO(e.getMessage()));
         }
+    }
+
+    @GetMapping("/getPostCategoryStats")
+    public Map<String, Object> getPostCategoryStats() {
+        return postService.getPostCategoryStats();
     }
 }
 

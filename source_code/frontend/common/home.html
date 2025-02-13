@@ -35,6 +35,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#" id="logout-button" style="display:none;">Đăng Xuất</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="update-info-button" style="display:none;" data-bs-toggle="modal" data-bs-target="#updateInfoModal">Cập Nhật Thông Tin</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -43,6 +46,55 @@
   <div class="container">
     <h2 class="text-center mt-5">Chào mừng đến với Forum Online!</h2>
     <div class="row" id="category-list"></div>
+  </div>
+
+  <!-- Modal cập nhật thông tin cá nhân -->
+   <!-- Modal cập nhật thông tin cá nhân -->
+   <div class="modal fade" id="updateInfoModal" tabindex="-1" aria-labelledby="updateInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateInfoModalLabel">Cập Nhật Thông Tin Cá Nhân</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="update-info-form">
+            <div class="mb-3">
+              <label for="user_name" class="form-label">Tên Đăng Nhập</label>
+              <input type="text" class="form-control" id="user_name" name="user_name" readonly="true>
+            </div>
+            <div class="mb-3">
+              <label for="full_name" class="form-label">Họ và Tên</label>
+              <input type="text" class="form-control" id="full_name" name="full_name">
+            </div>
+            <div class="mb-3">
+              <label for="phone_number" class="form-label">Số Điện Thoại</label>
+              <input type="text" class="form-control" id="phone_number" name="phone_number">
+            </div>
+                <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Địa Chỉ</label>
+              <input type="text" class="form-control" id="address" name="address">
+            </div>
+            <div class="mb-3">
+              <label for="current_password" class="form-label">Mật Khẩu Hiện Tại</label>
+              <input type="password" class="form-control" id="current_password" name="current_password">
+            </div>
+            <div class="mb-3">
+              <label for="new_password" class="form-label">Mật Khẩu Mới</label>
+              <input type="password" class="form-control" id="new_password" name="new_password">
+            </div>
+            <div class="mb-3" >
+              <label for="confirm_password" class="form-label">Xác Nhận Mật Khẩu Mới</label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+            </div>
+            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- <script src="./js/navbar.js"></script> -->
   <script src="./js/home.js"></script>

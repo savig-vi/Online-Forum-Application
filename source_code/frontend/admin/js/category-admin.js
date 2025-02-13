@@ -14,8 +14,13 @@ $(document).ready(function () {
 
     // XỬ LÝ KHI CLICK VÀO CATEGORY TRÊN NAVBAR
     $('.management-link[data-target="category"]').click(function(e) {
+        // e.preventDefault();
+        // $('#categoryContainer').addClass('active');
+        // Cái này mới thêm
         e.preventDefault();
-        $('#categoryContainer').addClass('active');
+        $('.management-section').removeClass('active');
+        const target = $(this).data('target');
+        $('#' + target + 'Container').addClass('active');
     });
 
     // TẢI DANH SÁCH THỂ LOẠI
@@ -28,6 +33,9 @@ $(document).ready(function () {
             },
             success: function(categories) {
                 renderCategories(categories);
+            },
+            error: function(xhr, status, error) {
+                alert('Có lỗi xảy ra khi tải danh sách thể loại: ' + error);
             }
         });
     }
@@ -51,7 +59,6 @@ $(document).ready(function () {
             $('#categoryList').append(categoryItem);
         });
     }
-
 
     // XỬ LÝ KHI CLICK SỬA
     $(document).on('click', '.btn-edit-category', function() {
@@ -112,4 +119,56 @@ $(document).ready(function () {
             });
         }
     });
+
+    // XỬ LÝ KHI CLICK "TẠO THỂ LOẠI MỚI"
+    $('#createCategoryBtn').click(function() {
+        $('#createCategoryModal').modal('show');
+    });
+
+    // LƯU THỂ LOẠI MỚI
+    $('#saveNewCategory').click(function() {
+        const newCategoryName = $('#newCategoryName').val();
+        const newCategoryDescription = $('#newCategoryDescription').val();
+        if (isCategoryNameExists(newCategoryName)) {
+            alert('Thể loại này đã có rồi bạn ơi.');
+            return;
+        }
+        const newCategory = {
+            categoryName: normalizeString(newCategoryName),
+            description: newCategoryDescription.trim()
+        };
+        $.ajax({
+            url: `https://localhost:8443/api/admin/category/createCategory`,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(newCategory),
+            xhrFields: {
+                withCredentials: true
+            },
+            success: function() {
+                alert('Tạo thể loại mới thành công');
+                $('#createCategoryModal').modal('hide');
+                loadCategories();
+            }
+        });
+    });
+
+    // HÀM CHUẨN HÓA TÊN THỂ LOAỊ
+    function normalizeString(str) {
+        return str.trim().replace(/\s+/g, ' ').toLowerCase();
+    }
+
+    // HÀM KIỂM TRA TÊN THỂ LOẠI ĐÃ TỒN TẠI CHƯA, DỰA VÀO HTML RENDER
+    function isCategoryNameExists(categoryName) {
+    const normalizedCategoryName = normalizeString(categoryName);
+    let exists = false;
+    $('#categoryList .list-group-item').each(function() {
+        const existingCategoryName = normalizeString($(this).find('h5').text());
+        if (existingCategoryName === normalizedCategoryName) {
+            exists = true;
+            return false; // Dừng vòng lặp
+        }
+    });
+    return exists;
+}
 });

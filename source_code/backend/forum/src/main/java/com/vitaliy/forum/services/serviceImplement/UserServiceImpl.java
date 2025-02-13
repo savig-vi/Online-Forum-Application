@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     // Cập nhật thông tin người dùng
-    public User updateUser(int userId, String fullName, String phoneNumber, String address, String email) {
+    public User updateUser(int userId, String fullName, String phoneNumber, String address, String email, String passwordHash) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found for id: " + userId));
 
@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(phoneNumber);
         user.setAddress(address);
         user.setEmail(email);
-
+        user.setPasswordHash(passwordHash);
         return userRepository.save(user); // Lưu người dùng đã cập nhật
     }
 

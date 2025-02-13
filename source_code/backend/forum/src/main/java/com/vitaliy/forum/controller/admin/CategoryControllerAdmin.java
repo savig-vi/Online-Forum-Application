@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,11 @@ public class CategoryControllerAdmin {
 
     @Autowired
     private CategoryService categoryService;
+
+    @PostMapping("/createCategory")
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+        return ResponseEntity.ok(categoryService.createCategory(category));
+    }
 
     @GetMapping("/getCategoryById")
     public ResponseEntity<Category> getCategoryBydId(@RequestParam int categoryId) {
