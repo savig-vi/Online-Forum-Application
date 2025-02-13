@@ -3,14 +3,15 @@ package com.vitaliy.forum.services.service;
 import java.util.List;
 
 import com.vitaliy.forum.entity.Message;
-import com.vitaliy.forum.entity.User;
 
 public interface MessageService {
-    Message saveMessage(Message message);
-    Message getMessageById(int id);
-    List<Message> getMessagesBySender(User sender);
-    List<Message> getMessagesByReceiver(User receiver);
-    List<Message> getUnreadMessages(User receiver);
-    void markMessageAsRead(int messageId);
+    List<Message> getMessagesBySender(int senderId);
+    List<Message> getMessagesByReceiver(int receiverId);
+    List<Message> getMessagesBetweenUsers(int user1Id, int user2Id);
+    Message getMessageById(int messageId);
+    Message sendMessage(int senderId, int receiverId, String content);
+    Message markAsRead(int messageId);
     void deleteMessage(int messageId);
+    boolean isMessageExist(int messageId);
+    void deleteMessagesBetweenUsers(int user1Id, int user2Id);
 }

@@ -1,12 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Ví dụ Counter</title>
 </head>
 <body>
-    
-    
+  <p id="counter">0</p>
+  <button id="increase">Tăng</button>
+
+  <script>
+    // Khai báo state đơn giản: số đếm
+    let count = 0;
+
+    // Hàm cập nhật giao diện
+    function render() {
+      document.getElementById('counter').innerText = count;
+    }
+
+    // Gắn sự kiện cho nút
+    document.getElementById('increase').addEventListener('click', function() {
+        for (var i = 0; i < 1; i ++) {
+            setInterval(() => {
+                count++;       // Cập nhật state
+                render();
+            }, 0.00001);
+      }
+    });
+  </script>
 </body>
 </html>

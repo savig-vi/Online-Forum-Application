@@ -8,5 +8,6 @@
         "cert": "D:/Online-Forum-Application/source_code/frontend/https/localhost.pem",
         "key": "D:/Online-Forum-Application/source_code/frontend/https/localhost.key",
         "passphrase": "123456"
-    }
+    },
+    "java.compile.nullAnalysis.mode": "automatic"
 }

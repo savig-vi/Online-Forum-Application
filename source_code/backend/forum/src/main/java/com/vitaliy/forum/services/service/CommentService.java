@@ -1,17 +1,18 @@
 package com.vitaliy.forum.services.service;
 
 import java.util.List;
-
+import com.vitaliy.forum.dto.CommentRequestDTO;
 import com.vitaliy.forum.entity.Comment;
-import com.vitaliy.forum.entity.Post;
 import com.vitaliy.forum.entity.User;
 
 public interface CommentService {
-    Comment saveComment(Comment comment);
-    Comment getCommentById(int id);
-    List<Comment> getCommentsByPostId(Post post);
-    List<Comment> getCommentsByAuthor(User author);
-    void updateComment(Comment comment);
-    void deleteComment(int id);
-    void toggleCommentVisibility(int id, boolean isActive);
+    List<Comment> getCommentsByPostId(int postId);
+    List<Comment> getCommentsByUserId(int userId);
+    Comment getCommentById(int commentId);
+    Comment createComment(int userId, CommentRequestDTO commentDTO);
+    Comment updateComment(int commentId, String newComment, User currentUser);
+    void deleteComment(int commentId, User currentUser);
+    Boolean deleteCommentAdmin(int commentId);
+    boolean isCommentExist(int commentId);
+    void toggleCommentActiveStatus(int commentId, boolean isActive);
 }

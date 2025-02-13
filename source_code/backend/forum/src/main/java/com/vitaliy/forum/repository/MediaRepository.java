@@ -12,7 +12,9 @@ import com.vitaliy.forum.entity.User;
 
 @Repository
 public interface MediaRepository extends JpaRepository<Media, Integer> {
-    List<Media> findByPostId(Post postId);
-    List<Media> findByCommentId(Comment commentId);
-    List<Media> findByUploadedById(User userId);
+    List<Media> findByPost(Post post);
+    List<Media> findByPost_PostId(int postId);
+    List<Media> findByUploadedBy(User user);
+    List<Media> findByUploadedBy_UserId(int userId);
+    List<Media> findByComment(Comment comment);
 }

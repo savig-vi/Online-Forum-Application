@@ -14,7 +14,7 @@ import com.vitaliy.forum.entity.User;
 import com.vitaliy.forum.services.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5500")
+@CrossOrigin(origins = "https://localhost:5501")
 @RequestMapping("/api/user")
 public class UserController {
 
@@ -23,13 +23,14 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User registeredUser = userService.registerUser(user);
+        User registeredUser = userService.createUser(user);
         return ResponseEntity.ok(registeredUser);
     }
-    @PutMapping("/updateInfo/{id}")
-    public ResponseEntity<User> updateUserCtl(@PathVariable("id") int id, @RequestBody User user) {
-        user.setUserId(id);
-        User updatedUser = userService.updateUser(user);
-        return ResponseEntity.ok(updatedUser);
-    }
+
+    // @PutMapping("/updateInfo/{id}")
+    // public ResponseEntity<User> updateUserCtl(@PathVariable("id") int id, @RequestBody User user) {
+    //     user.setUserId(id);
+    //     User updatedUser = userService.updateUser(user);
+    //     return ResponseEntity.ok(updatedUser);
+    // }
 }

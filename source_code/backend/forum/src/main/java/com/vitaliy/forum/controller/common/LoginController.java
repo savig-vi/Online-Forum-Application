@@ -2,6 +2,7 @@ package com.vitaliy.forum.controller.common;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ import com.vitaliy.forum.services.service.UserService;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/api/common")
+@RequestMapping("/api")
 public class LoginController {
 
     @Autowired
@@ -45,13 +46,11 @@ public class LoginController {
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestParam String email, @RequestParam String passwordHash, HttpSession session) {
         try {
-            boolean isInfoLoginTrue = userService.checkInfoLogin(email, passwordHash);
+            Optional<User> userLogin = userService.getLoginWithEmailAndPasswordHash(email, passwordHash);
     
-            if (isInfoLoginTrue) {
-                User user = userService.getUserByEmail(email);
-                session.setAttribute("user", user);
-                System.out.println("ID session luc login thanh cong: " + session.getId());
-                return ResponseEntity.ok(user);
+            if (userLogin.isPresent()) {
+                session.setAttribute("user", userLogin.get());
+                return ResponseEntity.ok(userLogin.get());
             } else
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } catch (Exception e) {

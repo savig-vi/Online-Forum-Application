@@ -1,0 +1,26 @@
+  /* Hiệu ứng cho card bài viết */
+.card {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  cursor: pointer;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Tạo hiệu ứng bóng mờ khi hover vào bài viết */
+.card-body {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.card:hover .card-body {
+  background-color: #f8f9fa;
+}
+
+/* Giữ nguyên dịnh dạng xuống dòng */
+#post-content {
+  white-space: pre-line;
+}

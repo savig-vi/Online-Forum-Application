@@ -2,20 +2,22 @@ package com.vitaliy.forum.services.service;
 
 import java.util.List;
 
-import com.vitaliy.forum.dto.PostDetailResponse;
-import com.vitaliy.forum.entity.Category;
+import com.vitaliy.forum.dto.post.CreatePostRequestDTO;
+import com.vitaliy.forum.dto.post.UpdatePostRequestDTO;
 import com.vitaliy.forum.entity.Post;
 import com.vitaliy.forum.entity.User;
+import com.vitaliy.forum.exception.BusinessException;
 
 
 public interface PostService {
-    Post savePost(Post post);
-    Post getPostById(int id);
-    List<Post> getPostsByCategoryId(Category category);
-    List<Post> getPostsByAuthor(User author);
-    List<Post> getPostsByVisibility(Boolean visibility);
-    void updatePost(Post post);
-    void deletePost(int id);
-    void togglePostVisibility(int id, Boolean visibility);
-    PostDetailResponse getPostDetailById(Integer postId);
+    Post getPostById(Integer postId);
+    List<Post> getPostsByCategoryId(Integer categoryId);
+    List<Post> getPostsByAuthorId(int authorId);
+    Post createPost(CreatePostRequestDTO request, User author);
+    Post updatePost(int postId, UpdatePostRequestDTO request, int userId) throws BusinessException;
+    int deletePost(int postId, int userId) throws BusinessException;
+    int deletePostAdmin(int postId) throws BusinessException;
+    Post togglePostVisibility(int postId, boolean visibility);
+    Post togglePostStatus(int postId, boolean isActive);
+    int updateIsActiveById(int postId, Boolean isActive);
 }

@@ -1,0 +1,27 @@
+body {
+  background-color: #ffffff;
+}
+.navbar {
+  background-color: #007bff;
+}
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: white;
+}
+.navbar .nav-link:hover {
+  color: #ddd;
+}
+.topic-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+.topic-description {
+  color: #666;
+}
+.container {
+  margin-top: 30px;
+}
+.container {
+  margin-top: 20px; /* Điều chỉnh giá trị này nếu cần */
+}

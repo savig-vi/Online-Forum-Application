@@ -1,21 +1,23 @@
 package com.vitaliy.forum.services.serviceImplement;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.vitaliy.forum.dto.CommentResponse;
-import com.vitaliy.forum.dto.PostDetailResponse;
+import com.vitaliy.forum.dto.post.CreatePostRequestDTO;
+import com.vitaliy.forum.dto.post.UpdatePostRequestDTO;
 import com.vitaliy.forum.entity.Category;
-import com.vitaliy.forum.entity.Comment;
 import com.vitaliy.forum.entity.Post;
 import com.vitaliy.forum.entity.User;
-import com.vitaliy.forum.repository.CommentRepository;
+import com.vitaliy.forum.exception.BusinessException;
+import com.vitaliy.forum.repository.CategoryRepository;
 import com.vitaliy.forum.repository.PostRepository;
 import com.vitaliy.forum.services.service.PostService;
+
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -23,77 +25,109 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Autowired
-    private CommentRepository commentRepository;
+    private CategoryRepository categoryRepository;
+
 
     @Override
-    public Post savePost(Post post) {
+    public Post getPostById(Integer postId) {
+        Optional<Post> post = postRepository.findById(postId);
+        return post.orElseThrow(() -> new RuntimeException("Post not found for id: " + postId));
+    }
+
+    @Override
+    public List<Post> getPostsByCategoryId(Integer categoryId) {
+        return postRepository.findByCategory_CategoryId(categoryId);
+    }
+
+    @Override
+    public List<Post> getPostsByAuthorId(int authorId) {
+        return postRepository.findByAuthor_UserId(authorId);
+    }
+
+    @Override
+    @Transactional
+    public Post createPost(CreatePostRequestDTO request, User author) {
+        // Lấy category từ database
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy chủ đề với ID: " + request.getCategoryId()));
+
+        // Tạo entity mới
+        Post newPost = new Post();
+        newPost.setTitle(request.getTitle());
+        newPost.setContent(request.getContent());
+        newPost.setCategory(category);
+        newPost.setAuthor(author);
+        newPost.setPostDate(new Date());
+        newPost.setVisibility(true); // Mặc định public
+        newPost.setActive(true); // Mặc định active
+
+        return postRepository.save(newPost);
+    }
+
+    @Override
+    @Transactional
+    public Post updatePost(int postId, UpdatePostRequestDTO request, int userId) throws BusinessException {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException("Bài viết không tồn tại", HttpStatus.NOT_FOUND));
+
+        if (post.getAuthor().getUserId() != userId) {
+            throw new BusinessException("Không có quyền chỉnh sửa", HttpStatus.FORBIDDEN);
+        }
+
+        post.setTitle(request.getTitle());
+        post.setContent(request.getContent());
         return postRepository.save(post);
     }
 
     @Override
-    public Post getPostById(int id) {
-        return postRepository.findById(id).orElse(null);
-    }
+    @Transactional
+    public int deletePost(int postId, int userId) throws BusinessException {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException("Bài viết không tồn tại", HttpStatus.NOT_FOUND));
 
-    @Override
-    public List<Post> getPostsByCategoryId(Category category) {
-        return postRepository.findByCategoryId(category);
-    }
-
-    @Override
-    public List<Post> getPostsByAuthor(User authorId) {
-        return postRepository.findByAuthorId(authorId);
-    }
-
-    @Override
-    public List<Post> getPostsByVisibility(Boolean visibility) {
-        return postRepository.findByVisibility(visibility);
-    }
-
-    @Override
-    public void updatePost(Post post) {
-        postRepository.save(post);
-    }
-
-    @Override
-    public void deletePost(int id) {
-        postRepository.deleteById(id);
-    }
-
-    @Override
-    public void togglePostVisibility(int id, Boolean visibility) {
-        Post post = getPostById(id);
-        if (post != null) {
-            post.setVisibility(visibility);
-            updatePost(post);
+        if (post.getAuthor().getUserId() != userId) {
+            throw new BusinessException("Không có quyền xóa", HttpStatus.FORBIDDEN);
         }
+
+        // post.setActive(false);
+        postRepository.deleteById(postId);
+        int postCategoryId = post.getCategory().getCategoryId();
+        return postCategoryId;
     }
 
-    // PostDetailResponse getPostDetailById(Long postId)
+    @Override
+    @Transactional
+    public int deletePostAdmin(int postId) throws BusinessException {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new BusinessException("Bài viết không tồn tại", HttpStatus.NOT_FOUND));
+
+        // post.setActive(false);
+        postRepository.deleteById(postId);
+        int postCategoryId = post.getCategory().getCategoryId();
+        return postCategoryId;
+    }
 
     @Override
-    public PostDetailResponse getPostDetailById(Integer postId) {
-        // Lấy bài viết từ database
-        
-        Post post = postRepository.findById(postId).orElse(new Post());
+    @Transactional
+    public int updateIsActiveById(int postId, Boolean isActive) {
+        return postRepository.updateIsActiveById(postId, isActive);
+    }
 
+    @Override
+    public Post togglePostVisibility(int postId, boolean visibility) {
+        Post post = postRepository.findById(postId)
+            .orElseThrow(() -> new RuntimeException("Post not found for id: " + postId));
 
-        List<Comment> comments = commentRepository.findByPostId(post);
+        post.setVisibility(visibility);
+        return postRepository.save(post); // Lưu trạng thái hiển thị đã thay đổi
+    }
 
-        // Chuyển dữ liệu từ Post và Comment thành PostDetailResponse
-        PostDetailResponse response = new PostDetailResponse();
-        response.setPostId(post.getPostId());
-        response.setTitle(post.getTitle());
-        response.setContent(post.getContent());
-        response.setAuthorName(post.getAuthorId().getFullName()); // Lấy tên người đăng từ đối tượng Author
-        response.setCategoryName(post.getCategoryId().getCategoryName()); // Lấy tên thể loại từ đối tượng Category
-        response.setPostDate(post.getPostDate());
-        
-        // Map các bình luận
-        // ĐỂ Ý CÁI STREAM NÀY, HƠI KHÓ HIỂU
-        response.setComments(comments.stream()
-                                      .map(comment -> new CommentResponse(comment.getAuthorId().getFullName(), comment.getContent()))
-                                      .collect(Collectors.toList()));
-        return response;
+    @Override
+    public Post togglePostStatus(int postId, boolean isActive) {
+        Post post = postRepository.findById(postId)
+            .orElseThrow(() -> new RuntimeException("Post not found for id: " + postId));
+
+        post.setActive(isActive);
+        return postRepository.save(post); // Lưu trạng thái hoạt động đã thay đổi
     }
 }

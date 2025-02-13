@@ -6,14 +6,12 @@ import java.util.Optional;
 import com.vitaliy.forum.entity.User;
 
 public interface UserService {
-    User registerUser(User user);
-    User getUserById(int id);
-    User getUserByEmail(String email);
-    User getUserByUsername(String username);
     List<User> getAllUsers();
-    User updateUser(User user);
-    void deleteUser(int id);
-    void activateUser(int id);
-    void deactivateUser(int id);
-    boolean checkInfoLogin(String email, String passwordHash);
+    User getUserById(int userId);
+    User createUser(User user);
+    User updateUser(int userId, String fullName, String phoneNumber, String address, String email);
+    void deleteUser(int userId);
+    User toggleUserStatus(int userId, boolean isActive);
+    boolean userExists(String userName, String email);
+    Optional<User> getLoginWithEmailAndPasswordHash(String email, String passwordHash);
 }

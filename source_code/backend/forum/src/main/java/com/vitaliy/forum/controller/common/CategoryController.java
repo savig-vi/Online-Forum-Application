@@ -1,8 +1,7 @@
-package com.vitaliy.forum.controller.common.category;
+package com.vitaliy.forum.controller.common;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,25 +9,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.vitaliy.forum.entity.Category;
-import com.vitaliy.forum.entity.Post;
 import com.vitaliy.forum.services.service.CategoryService;
-import com.vitaliy.forum.services.service.PostService;
 
 @RestController
-@RequestMapping("/api/common/category")
+@RequestMapping(value =  "/api/category", produces = "application/json; charset=UTF-8")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/getAll")
+    @GetMapping("/getAllCategories")
     public ResponseEntity<List<Category>> getAllCategory() {
-        List<Category> listCategory = categoryService.getAllCategory();
+        List<Category> listCategory = categoryService.getAllCategories();
         return ResponseEntity.ok(listCategory);
     }
 
-    // OKE
-    
+    @GetMapping("/getCategoryNameById/{categoryId}")
+    public ResponseEntity<Optional<String>> getCategoryNameById(@PathVariable int categoryId) {
+        Optional<String> categoryName = categoryService.getCategoryNameById(categoryId);
+        return ResponseEntity.ok(categoryName);
+    }
 }

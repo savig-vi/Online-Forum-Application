@@ -1,0 +1,53 @@
+/* Tạo kiểu cho các bình luận */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.card-body {
+  background-color: #f9f9f9;
+}
+
+.card-text {
+  font-size: 25px;
+}
+
+.card-body p.text-muted {
+  font-size: 17px;
+  color: #6c757d;
+}
+
+textarea {
+  resize: none;
+}
+
+#comment-form {
+  margin-top: 20px;
+}
+
+.error-message {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+/* Thêm các style mới */
+.post-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+}
+
+.dropdown-menu {
+  min-width: 120px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.delete-post {
+  color: #dc3545;
+}
+
+.delete-post:hover {
+  background-color: #dc3545;
+  color: white;
+}
+

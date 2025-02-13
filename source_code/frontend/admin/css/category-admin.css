@@ -1,0 +1,4 @@
+/* Kích hoạt ẩn thể loại khi tìm kiếm */
+.list-group-item[style*="display: none"] {
+    display: none !important;
+}

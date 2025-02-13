@@ -24,12 +24,12 @@ public class Message {
     private int messageId;
 
     @ManyToOne
-    @JoinColumn(name = "SenderID", nullable = false)
-    private User senderId; // Người gửi tin nhắn
+    @JoinColumn(name = "Sender", nullable = false)
+    private User sender; // Người gửi tin nhắn
 
     @ManyToOne
-    @JoinColumn(name = "ReceiverId", nullable = false)
-    private User receiverId; // Người nhận tin nhắn
+    @JoinColumn(name = "Receiver", nullable = false)
+    private User receiver; // Người nhận tin nhắn
 
     @Column(name = "Content", nullable = false)
     private String content; // Nội dung tin nhắn

@@ -2,12 +2,15 @@ package com.vitaliy.forum.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -26,14 +29,16 @@ public class Comment {
     private int commentId;
 
     @ManyToOne
-    @JoinColumn(name = "PostId", nullable = false)
-    private Post postId; // Quan hệ với Post (Bài viết được bình luận)
+    @JoinColumn(name = "Post", nullable = false)
+    @JsonBackReference
+    private Post post; // Quan hệ với Post (Bài viết được bình luận)
 
     @ManyToOne
-    @JoinColumn(name = "AuthorId", nullable = false)
-    private User authorId; // Quan hệ với User (Người bình luận)
+    @JoinColumn(name = "Commenter", nullable = false)
+    private User commenter; // Quan hệ với User (Người bình luận)
 
-    @Column(name = "Content", nullable = false)
+    @Column(name = "Content", nullable = false, columnDefinition = "TEXT")
+    @Lob
     private String content; // Nội dung bình luận
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,5 +46,5 @@ public class Comment {
     private Date commentDate; // Thời gian bình luận
 
     @Column(name = "IsActive")
-    private boolean isActive; // Trạng thái bình luận (đang hoạt động hay bị khóa)
+    private boolean isActive;
 }

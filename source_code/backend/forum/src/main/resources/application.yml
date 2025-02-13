@@ -25,6 +25,10 @@ server:
     basedir: .
     relaxed-query-chars: ['<', '>', '[', ']', '{', '}', '|', '^', '`', '"']
   servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
     session:
       timeout: 1800
       tracking-modes: cookie
@@ -33,4 +37,3 @@ server:
         http-only: true
         secure: true   
         same-site: NONE
- 

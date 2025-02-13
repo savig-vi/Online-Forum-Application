@@ -1,0 +1,23 @@
+/* Custom Admin Styles */
+.management-section {
+    display: none;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.management-section.active {
+    display: block;
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.nav-link.management-link.active {
+    background-color: #495057;
+    border-radius: 5px;
+}

@@ -12,10 +12,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "Media")
 public class Media {
     @Id
@@ -24,22 +28,22 @@ public class Media {
     private int mediaId;
 
     @ManyToOne
-    @JoinColumn(name = "PostId")
-    private Post postId; // Bài viết chứa media (nếu có)
+    @JoinColumn(name = "Post")
+    private Post post; // Bài viết chứa media (nếu có)
 
     @ManyToOne
-    @JoinColumn(name = "CommentId")
-    private Comment commentId; // Bình luận chứa media (nếu có)
+    @JoinColumn(name = "Comment")
+    private Comment comment; // Bình luận chứa media (nếu có)
 
     @Column(name = "FileURL", nullable = false)
     private String fileURL; // Đường dẫn đến file
 
     @Column(name = "FileType")
-    private Boolean fileType; // Loại tệp (Hình ảnh hoặc Video)
+    private boolean fileType; // Loại tệp (Hình ảnh hoặc Video)
 
     @ManyToOne
-    @JoinColumn(name = "UploadedById", nullable = false)
-    private User uploadedById; // Người tải lên
+    @JoinColumn(name = "UploadedBy", nullable = false)
+    private User uploadedBy; // Người tải lên
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "UploadDate")

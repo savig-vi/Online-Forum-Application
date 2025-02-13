@@ -1,13 +1,10 @@
 package com.vitaliy.forum.services.serviceImplement;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.vitaliy.forum.entity.User;
 import com.vitaliy.forum.repository.UserRepository;
 import com.vitaliy.forum.services.service.UserService;
@@ -17,77 +14,68 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     * Xử lý việc check thông tin db trong đây, hiện tại chưa làm
-     * cái check mail trùng
-     */
-    @Override
-    public User registerUser(User user) {
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        Timestamp timestamp = Timestamp.valueOf(currentDateTime);
-        user.setRegistrationDate(timestamp);
-        user.setUserRole(false);
-        user.setActive(true);
-        user.setFacebookId(null);
-        return userRepository.save(user);
+    public Optional<User> getLoginWithEmailAndPasswordHash(String email, String passwordHash) {
+        Optional<User> user = userRepository.findByEmailAndPasswordHash(email, passwordHash);
+        return user;
     }
-
-    @Override
-    public User getUserById(int id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUserName(username);
-    }
-
-    @Override
+    // Lấy tất cả người dùng
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    // Lấy người dùng theo ID
+    public User getUserById(int userId) {
+        Optional<User> user = userRepository.findById(userId);
+        return user.orElseThrow(() -> new RuntimeException("User not found for id: " + userId));
     }
 
-    @Override
-    public void deleteUser(int id) {
-        userRepository.deleteById(id);
+    // Tạo mới người dùng
+    public User createUser(User user) {
+        user.setRegistrationDate(null);
+        user.setFacebookId(null);
+        user.setRegistrationDate(new Date()); // Thời gian đăng ký
+        user.setUserRole(false); // Mặc định user có role người dùng thường
+        user.setActive(true); // Mặc định tài khoản là active
+        return userRepository.save(user); // Lưu người dùng vào cơ sở dữ liệu
     }
 
-    @Override
-    public void activateUser(int id) {
-        User user = getUserById(id);
-        if (user != null) {
-            user.setActive(true);
-            updateUser(user);
-        }
+    // Cập nhật thông tin người dùng
+    public User updateUser(int userId, String fullName, String phoneNumber, String address, String email) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found for id: " + userId));
+
+        user.setFullName(fullName);
+        user.setPhoneNumber(phoneNumber);
+        user.setAddress(address);
+        user.setEmail(email);
+
+        return userRepository.save(user); // Lưu người dùng đã cập nhật
     }
 
-    @Override
-    public void deactivateUser(int id) {
-        User user = getUserById(id);
-        if (user != null) {
-            user.setActive(false);
-            updateUser(user);
-        }
+    // Xóa người dùng
+    public void deleteUser(int userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found for id: " + userId));
+        userRepository.delete(user); // Xóa người dùng khỏi cơ sở dữ liệu
     }
 
-    @Override
-    public boolean checkInfoLogin(String email, String passwordHash) {
-        Optional<User> optionalUser = userRepository.findByEmailAndPasswordHash(email, passwordHash);
-        if (optionalUser.isPresent()) {
-            System.out.println("IsPresent - FIND BY EMAIL VA PASSWORD: " + optionalUser.get());
-            return true;
-        }
-        System.out.println("Khong ton tai " + email + " va " + passwordHash);
-        return false; // Đăng nhập thất bại
+    // Thay đổi trạng thái người dùng (kích hoạt / vô hiệu hóa)
+    public User toggleUserStatus(int userId, boolean isActive) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new RuntimeException("User not found for id: " + userId));
+
+        user.setActive(isActive);
+        return userRepository.save(user); // Lưu trạng thái hoạt động đã thay đổi
+    }
+
+    // Kiểm tra người dùng có tồn tại với username hay email
+    public boolean userExists(String userName, String email) {
+        return userRepository.existsByUserNameOrEmail(userName, email);
+    }
+
+    // Lấy người dùng theo username (giả sử username là duy nhất)
+    public User getUserByUserName(String userName) {
+        return userRepository.findByUserName(userName)
+            .orElseThrow(() -> new RuntimeException("User not found for username: " + userName));
     }
 }

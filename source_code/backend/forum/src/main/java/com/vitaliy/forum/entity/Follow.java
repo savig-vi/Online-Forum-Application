@@ -24,12 +24,12 @@ public class Follow {
     private int followId;
 
     @ManyToOne
-    @JoinColumn(name = "FollowerId", nullable = false)
-    private User followerId; // Người theo dõi
+    @JoinColumn(name = "Follower", nullable = false)
+    private User follower; // Người theo dõi
 
     @ManyToOne
-    @JoinColumn(name = "FollowedId", nullable = false)
-    private User followedId; // Người được theo dõi
+    @JoinColumn(name = "Followed", nullable = false)
+    private User followed; // Người được theo dõi
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FollowDate")
